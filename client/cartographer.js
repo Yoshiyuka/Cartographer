@@ -285,16 +285,24 @@ if (Meteor.isClient) {
 				velious: {name: "", who: ""}
       }]
   });
+
+  Template.header.events({
+    'click': function(event){
+      if(event.target.hash){
+        Session.set('zone', event.target.hash.substring(1));
+      }
+    }
+  })
   Template.content.helpers({
     counter: function () {
-      return Session.get('counter');
+      return Session.get('zone');
     }
   });
 
   Template.content.events({
-    'click button': function () {
+    'click': function (event) {
       // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+      alert(Session.get('zone'));
     }
   });
 }
