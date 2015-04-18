@@ -287,9 +287,10 @@ if (Meteor.isClient) {
   });
 
   Template.header.events({
-    'click': function(event){
+    'click a': function(event){
       if(event.target.hash){
         Session.set('zone', event.target.hash.substring(1));
+        $('#zoneList').collapse('hide');
       }
     }
   })
