@@ -5,107 +5,107 @@ if (Meteor.isClient) {
   Template.header.helpers({
     zones: [
       { classic: {name: "Ak'Anon", who: "akanon"}, 
-        kunark:  {name: "Burning Woods", who: ""},
+        kunark:  {name: "Burning Wood", who: "burningwood"},
         velious: {name: "Cobalt Scar", who: ""}
       },
       { classic: {name: "Befallen", who: "befallen"},
-				kunark:  {name: "Cabilis (East)", who: ""},
+				kunark:  {name: "Cabilis (East)", who: "cabeast"},
 				velious: {name: "Crystal Caverns", who: ""}
 			},
       { classic: {name: "Blackburrow", who: "blackburrow"},
-				kunark:  {name: "Cabilis (West)", who: ""},
+				kunark:  {name: "Cabilis (West)", who: "cabwest"},
 				velious: {name: "Dragon Necropolis", who: ""}
 			},
       { classic: {name: "Butcherblock Mountains", who: "butcher"},
-				kunark:  {name: "Chardok", who: ""},
+				kunark:  {name: "Chardok", who: "chardok"},
 				velious: {name: "Eastern Wastes", who: ""}
 			},
       { classic: {name: "Cazic-Thule", who: "cazicthule"},
-				kunark:  {name: "City of Mist", who: ""},
+				kunark:  {name: "City of Mist", who: "citymist"},
 				velious: {name: "Iceclad Ocean", who: ""}
 			},
       { classic: {name: "Commonlands (East)", who: "ecommons"},
-				kunark:  {name: "Dalnir", who: ""},
+				kunark:  {name: "Dalnir", who: "dalnir"},
 				velious: {name: "Icewell Keep", who: ""}
 			},
       { classic: {name: "Commonlands (West)", who: "commons"},
-				kunark:  {name: "Dreadlands", who: ""},
+				kunark:  {name: "Dreadlands", who: "dreadlands"},
 				velious: {name: "Kael Drakkal", who: ""}
 			},
       { classic: {name: "Crushbone", who: "crushbone"},
-				kunark:  {name: "Emerald Jungle", who: ""},
+				kunark:  {name: "Emerald Jungle", who: "emeraldjungle"},
 				velious: {name: "Plane of Growth", who: ""}
 			},
       { classic: {name: "Dagnor's Cauldron", who: "cauldron"},
-				kunark:  {name: "Field of Bone", who: ""},
+				kunark:  {name: "Field of Bone", who: "fieldofbone"},
 				velious: {name: "Plane of Mischief", who: ""}
 			},
       { classic: {name: "Erud's Crossing", who: "erudsxing"},
-				kunark:  {name: "Firiona Vie", who: ""},
+				kunark:  {name: "Firiona Vie", who: "firiona"},
 				velious: {name: "Siren's Grotto", who: ""}
 			},
       { classic: {name: "Erudin", who: "erudnext"},
-				kunark:  {name: "Frontier Mountains", who: ""},
+				kunark:  {name: "Frontier Mountains", who: "frontiermtns"},
 				velious: {name: "Skyshrine", who: ""}
 			},
       { classic: {name: "Erudin (Palace)", who: "erudnint"},
-				kunark:  {name: "Howling Stones (Charasis)", who: ""},
+				kunark:  {name: "Howling Stones (Charasis)", who: "charasis"},
 				velious: {name: "Sleeper's Tomb", who: ""}
 			},
       { classic: {name: "Everfrost Peaks", who: "everfrost"},
-				kunark:  {name: "Kaesora", who: ""},
+				kunark:  {name: "Kaesora", who: "kaesora"},
 				velious: {name: "Temple of Veeshan", who: ""}
 			},
       { classic: {name: "Feerrott", who: "feerrott"},
-				kunark:  {name: "Karnor's Castle", who: ""},
+				kunark:  {name: "Karnor's Castle", who: "karnor"},
 				velious: {name: "The Great Divide", who: ""}
 			},
       { classic: {name: "Felwithe (North)", who: "felwithea"},
-				kunark:  {name: "Kurn's Tower", who: ""},
+				kunark:  {name: "Kurn's Tower", who: "kurn"},
 				velious: {name: "Thurgadin", who: ""}
 			},
       { classic: {name: "Felwithe (South)", who: "felwitheb"},
-				kunark:  {name: "Lake of Ill Omen", who: ""},
+				kunark:  {name: "Lake of Ill Omen", who: "lakeofillomen"},
 				velious: {name: "Tower of Frozen Shadow", who: ""}
 			},
       { classic: {name: "Freeport (North)", who: "freportn"},
-				kunark:  {name: "Overthere", who: ""},
+				kunark:  {name: "Overthere", who: "overthere"},
 				velious: {name: "Velketor's Labyrinth", who: ""}
 			},
       { classic: {name: "Freeport (East)", who: "freporte"},
-				kunark:  {name: "Old Sebilis", who: ""},
+				kunark:  {name: "Mines of Nurga", who: "nurga"},
 				velious: {name: "Wakening Land", who: ""}
 			},
       { classic: {name: "Freeport (West)", who: "freportw"},
-				kunark:  {name: "Mines of Nurga", who: ""},
+				kunark:  {name: "Old Sebilis", who: "sebilis"},
 				velious: {name: "Western Wastes", who: ""}
 			},
       { classic: {name: "Greater Faydark", who: "gfaydark"},
-				kunark:  {name: "Skyfire Mountains", who: ""},
+				kunark:  {name: "Skyfire Mountains", who: "skyfire"},
 				velious: {name: "", who: ""}
 			},
       { classic: {name: "Grobb", who: "grobb"},
-				kunark:  {name: "Swamp of No Hope", who: ""},
+				kunark:  {name: "Swamp of No Hope", who: "swampofnohope"},
 				velious: {name: "", who: ""}
 			},
       { classic: {name: "Guk (Bottom)", who: "gukbottom"},
-				kunark:  {name: "Temple of Droga", who: ""},
+				kunark:  {name: "Temple of Droga", who: "droga"},
 				velious: {name: "", who: ""}
 			},
       { classic: {name: "Guk (Top)", who: "guktop"},
-				kunark:  {name: "Timorous Deep", who: ""},
+				kunark:  {name: "Timorous Deep", who: "timorous"},
 				velious: {name: "", who: ""}
 			},
       { classic: {name: "Halas", who: "halas"},
-				kunark:  {name: "Trakanon's Teeth", who: ""},
+				kunark:  {name: "Trakanon's Teeth", who: "trakanon"},
 				velious: {name: "", who: ""}
 			},
       { classic: {name: "Highpass Hold", who: "highpass"},
-				kunark:  {name: "Veeshan's Peak", who: ""},
+				kunark:  {name: "Veeshan's Peak", who: "veeshan"},
 				velious: {name: "", who: ""}
 			},
       { classic: {name: "Highpass Keep", who: "highkeep"},
-				kunark:  {name: "Warsliks Woods", who: ""},
+				kunark:  {name: "Warsliks Woods", who: "warslikswood"},
 				velious: {name: "", who: ""}
 			},
       { classic: {name: "Innothule Swamp", who: "innothule"},
