@@ -1,6 +1,7 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+readyToDraw = new ReactiveVar(false);
+Meteor.subscribe("zonemaps", function(){
+  readyToDraw.set(true);
+});
 
   Template.header.helpers({
     zones: [
@@ -291,25 +292,69 @@ if (Meteor.isClient) {
       if(event.target.hash){
         Session.set('zone', event.target.hash.substring(1));
         $('#zoneList').collapse('hide');
+        c = document.getElementById("map");
+        c.scrollIntoView();
       }
     }
   })
-  Template.content.helpers({
-    counter: function () {
-      return Session.get('zone');
-    }
-  });
+ 
 
   Template.content.events({
     'click': function (event) {
       // increment the counter when button is clicked
-      alert(Session.get('zone'));
+      //alert(Session.get('zone'));
     }
   });
-}
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
+ Template.content.helpers({
+
+});
+
+//var c = document.getElementById("map");
+//var ctx = c.getContext("2d");
+Template.content.onRendered(function(){
+  this.autorun(function(){
+    if(!readyToDraw.get()){
+      return;
+    }
+
+    c = document.getElementById("map");
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    c.style.width = c.width.toString() + "px";
+    c.style.height = c.height.toString() + "px";
+    ctx = c.getContext("2d");
+    ctx.translate((c.width / 2) + 0.5, (c.height / 2) + 0.5);
+    //ctx.scale(0.03, 0.03);
+    check = zones.findOne({name: "Butcherblock Mountains"});
+    check.map.forEach(function(entry){
+      ctx.strokeStyle = "rgb(" 
+        + entry.color.r + ","
+        + entry.color.g + ","
+        + entry.color.b + ")";
+      ctx.beginPath();
+      ctx.moveTo((entry.first.x / 7) + 0.5, (entry.first.y / 7) + 0.5);
+      ctx.lineTo((entry.second.x / 7) + 0.5, (entry.second.y / 7) + 0.5);
+      ctx.stroke();
+    })
+    test = ctx.createRadialGradient(0, 20, 2, 0, 20, 10);
+    test.addColorStop(0, "rgba(255, 0, 0, 255)");
+    test.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+    test3 = ctx.createRadialGradient(-10, 30, 2, -10, 30, 10);
+    test3.addColorStop(0, "rgba(255, 0, 0, 255)");
+    test3.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+    test2 = ctx.createRadialGradient(-60, -30, 2, -60, -30, 10);
+    test2.addColorStop(0, "rgba(255, 255, 0, 255)");
+    test2.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+    ctx.fillStyle = test;
+    ctx.fillRect(-20, -20, 100, 100);
+    ctx.fillStyle = test2;
+    ctx.fillRect(-100, -100, 100, 100);
+    ctx.fillStyle = test3;
+    ctx.fillRect(-30, -20, 100, 100);
   });
-}
+});
+
