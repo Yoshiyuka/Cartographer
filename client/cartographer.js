@@ -301,8 +301,6 @@ Meteor.subscribe("zonemaps", function(){
 
   Template.content.events({
     'click': function (event) {
-      // increment the counter when button is clicked
-      //alert(Session.get('zone'));
     }
   });
 
@@ -310,8 +308,6 @@ Meteor.subscribe("zonemaps", function(){
 
 });
 
-//var c = document.getElementById("map");
-//var ctx = c.getContext("2d");
 Template.content.onRendered(function(){
   this.autorun(function(){
     if(!readyToDraw.get()){
@@ -326,7 +322,8 @@ Template.content.onRendered(function(){
     ctx = c.getContext("2d");
     ctx.translate((c.width / 2) + 0.5, (c.height / 2) + 0.5);
     //ctx.scale(0.03, 0.03);
-    check = zones.findOne({name: "Butcherblock Mountains"});
+    zoneName = Session.get("zone");
+    check = zones.findOne({name: zoneName});
     check.map.forEach(function(entry){
       ctx.strokeStyle = "rgb(" 
         + entry.color.r + ","
@@ -337,7 +334,7 @@ Template.content.onRendered(function(){
       ctx.lineTo((entry.second.x / 7) + 0.5, (entry.second.y / 7) + 0.5);
       ctx.stroke();
     })
-    test = ctx.createRadialGradient(0, 20, 2, 0, 20, 10);
+    /*test = ctx.createRadialGradient(0, 20, 2, 0, 20, 10);
     test.addColorStop(0, "rgba(255, 0, 0, 255)");
     test.addColorStop(1, "rgba(255, 255, 255, 0)");
 
@@ -354,7 +351,7 @@ Template.content.onRendered(function(){
     ctx.fillStyle = test2;
     ctx.fillRect(-100, -100, 100, 100);
     ctx.fillStyle = test3;
-    ctx.fillRect(-30, -20, 100, 100);
+    ctx.fillRect(-30, -20, 100, 100);*/
   });
 });
 

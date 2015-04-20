@@ -1,8 +1,8 @@
 Meteor.startup(function () {
     // code to run on server at startup
-	zones.insert({ name: "Butcherblock Mountains", map: butcher});
-	zones.insert({ name: "Blackburrow", map: blackburrow});
-    zones.insert({ name: "Plane of Air", map: airplane});
+	zones.insert({ name: "butcher", map: butcher});
+	zones.insert({ name: "blackburrow", map: blackburrow});
+    zones.insert({ name: "airplane", map: airplane});
 
     Meteor.publish("zonemaps", function(){
     	return zones.find({});
