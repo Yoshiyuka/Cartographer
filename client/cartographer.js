@@ -308,32 +308,72 @@ Meteor.subscribe("zonemaps", function(){
 
 });
 
+
+
+Template.content.onCreated(function(){
+  
+
+})
+
+function draw(entry){
+  
+}
 Template.content.onRendered(function(){
+  var canvas = document.getElementById("map");
+  var context = canvas.getContext("2d");
+  var scale = 1;
+  var originx = 0;
+  var originy = 0;
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.width = canvas.width.toString() + "px";
+  canvas.style.height = canvas.height.toString() + "px";
+  //context.translate((canvas.width / 2) + 0.5, (canvas.height / 2) + 0.5);
+
+  canvas.onmousewheel = function(event){
+    var mousex = event.clientX - canvas.offsetLeft;
+    var mousey = event.clientY - canvas.offsetTop;
+    var wheel = event.wheelDelta/120;
+    var zoom = 1 + wheel/2;
+
+    context.translate(originx, originy);
+    context.scale(zoom, zoom);
+    context.translate(
+      -(mousex / scale + originx - mousex / (scale * zoom)),
+      -(mousey / scale + originy - mousey / (scale * zoom)));
+    originx = (mousex / scale + originx - mousex / (scale * zoom));
+    originy = (mousey / scale + originy - mousey / (scale * zoom));
+
+    scale *= zoom;
+  }
+
   this.autorun(function(){
     if(!readyToDraw.get()){
       return;
     }
 
-    c = document.getElementById("map");
-    c.width = window.innerWidth;
-    c.height = window.innerHeight;
-    c.style.width = c.width.toString() + "px";
-    c.style.height = c.height.toString() + "px";
-    ctx = c.getContext("2d");
-    ctx.translate((c.width / 2) + 0.5, (c.height / 2) + 0.5);
-    //ctx.scale(0.03, 0.03);
     zoneName = Session.get("zone");
     check = zones.findOne({name: zoneName});
-    check.map.forEach(function(entry){
-      ctx.strokeStyle = "rgb(" 
-        + entry.color.r + ","
-        + entry.color.g + ","
-        + entry.color.b + ")";
-      ctx.beginPath();
-      ctx.moveTo((entry.first.x / 2) + 0.5, (entry.first.y / 2) + 0.5);
-      ctx.lineTo((entry.second.x / 2) + 0.5, (entry.second.y / 2) + 0.5);
-      ctx.stroke();
-    })
+
+    setInterval(function(){
+      context.beginPath();
+      context.fillStyle = "white";
+      context.fillRect(originx, originy, 1920/scale, 1080/scale);
+      context.closePath();
+      check.map.forEach(function(entry){
+        context.strokeStyle = "rgb(" 
+          + entry.color.r + ","
+          + entry.color.g + ","
+          + entry.color.b + ")";
+
+        context.beginPath();
+        context.moveTo((entry.first.x / 2) + 0.5, (entry.first.y / 2) + 0.5);
+        context.lineTo((entry.second.x / 2) + 0.5, (entry.second.y / 2) + 0.5);
+        context.stroke();
+        context.closePath();
+      })
+    }, 100);
     /*test = ctx.createRadialGradient(0, 20, 2, 0, 20, 10);
     test.addColorStop(0, "rgba(255, 0, 0, 255)");
     test.addColorStop(1, "rgba(255, 255, 255, 0)");
