@@ -281,7 +281,7 @@ Meteor.subscribe("zonemaps", function(){
 				kunark:  {name: "", who: ""},
 				velious: {name: "", who: ""}
 			},
-      { classic: {name: "Toxxulia Forest", who: "toxxulia"},
+      { classic: {name: "Toxxulia Forest", who: "tox"},
 				kunark:  {name: "", who: ""},
 				velious: {name: "", who: ""}
       }]
@@ -330,8 +330,8 @@ Template.content.onRendered(function(){
         + entry.color.g + ","
         + entry.color.b + ")";
       ctx.beginPath();
-      ctx.moveTo((entry.first.x / 7) + 0.5, (entry.first.y / 7) + 0.5);
-      ctx.lineTo((entry.second.x / 7) + 0.5, (entry.second.y / 7) + 0.5);
+      ctx.moveTo((entry.first.x / 2) + 0.5, (entry.first.y / 2) + 0.5);
+      ctx.lineTo((entry.second.x / 2) + 0.5, (entry.second.y / 2) + 0.5);
       ctx.stroke();
     })
     /*test = ctx.createRadialGradient(0, 20, 2, 0, 20, 10);

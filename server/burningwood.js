@@ -1,4 +1,4 @@
-burningwoods = [{
+burningwood = [{
 	first: { x: 4196.2690, y: 2592.3469, z: -23.7663 },
 	second: { x: 4244.4189, y: 2641.4751, z: 76.1106},
 	color: { r: 0, g: 127, b: 0}
