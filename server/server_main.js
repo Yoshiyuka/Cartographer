@@ -107,7 +107,3 @@ Meteor.startup(function () {
     	return zones.find({});
     });
 });
-
-
-//(-?[0-9]{1,4}(\.[0-9]{4})?)
-//{\n\tfirst: { x: $1, y: $2, z: $3 },\n\tsecond: { x: $4, y: $5, z: $6},\n\tcolor: { r: $7, g: $8, b: $9}\n},
