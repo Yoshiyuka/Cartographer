@@ -374,24 +374,6 @@ Template.content.onRendered(function(){
         context.closePath();
       })
     }, 100);
-    /*test = ctx.createRadialGradient(0, 20, 2, 0, 20, 10);
-    test.addColorStop(0, "rgba(255, 0, 0, 255)");
-    test.addColorStop(1, "rgba(255, 255, 255, 0)");
-
-    test3 = ctx.createRadialGradient(-10, 30, 2, -10, 30, 10);
-    test3.addColorStop(0, "rgba(255, 0, 0, 255)");
-    test3.addColorStop(1, "rgba(255, 255, 255, 0)");
-
-    test2 = ctx.createRadialGradient(-60, -30, 2, -60, -30, 10);
-    test2.addColorStop(0, "rgba(255, 255, 0, 255)");
-    test2.addColorStop(1, "rgba(255, 255, 255, 0)");
-
-    ctx.fillStyle = test;
-    ctx.fillRect(-20, -20, 100, 100);
-    ctx.fillStyle = test2;
-    ctx.fillRect(-100, -100, 100, 100);
-    ctx.fillStyle = test3;
-    ctx.fillRect(-30, -20, 100, 100);*/
   });
 });
 

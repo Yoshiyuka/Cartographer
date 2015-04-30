@@ -36,13 +36,40 @@ namespace Cartographer
         public Form1()
         {  
             InitializeComponent();
-            int exstyle = GetWindowLong(this.Handle, GWL_EXSTYLE);
-            exstyle |= WS_EX_TRANSPARENT;
-            SetWindowLong(this.Handle, GWL_EXSTYLE, exstyle);
-            IntPtr hwndf = this.Handle;
-            IntPtr hwndParent = GetDesktopWindow();
-            SetParent(hwndf, hwndParent);
-            this.TopMost = true;
+            //int exstyle = GetWindowLong(this.Handle, GWL_EXSTYLE);
+            //exstyle |= WS_EX_TRANSPARENT;
+            //SetWindowLong(this.Handle, GWL_EXSTYLE, exstyle);
+            //IntPtr hwndf = this.Handle;
+            //IntPtr hwndParent = GetDesktopWindow();
+            //SetParent(hwndf, hwndParent);
+            //this.TopMost = true;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //listView1.View = View.Details;
+            //listView1.GridLines = true;
+            //listView1.FullRowSelect = false;
+
+            //listView1.Columns.Add("Target", 100);
+            //listView1.Columns.Add("Faction", 100);
+            //listView1.Columns.Add("Affects", 100);
+
+            //Add items in the listview
+            //string[] arr = new string[4];
+            //ListViewItem itm;
+
+            //Add first item
+            //arr[0] = "product_1";
+            //arr[1] = "100";
+            //arr[2] = "10";
+            //itm = new ListViewItem(arr);
+            //listView1.Items.Add(itm);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
         }
     }
 }
