@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace Cartographer
 {
@@ -36,6 +37,7 @@ namespace Cartographer
         public Form1()
         {  
             InitializeComponent();
+            SQLiteConnection.CreateFile("MyDatabase.sqlite");
             //int exstyle = GetWindowLong(this.Handle, GWL_EXSTYLE);
             //exstyle |= WS_EX_TRANSPARENT;
             //SetWindowLong(this.Handle, GWL_EXSTYLE, exstyle);
