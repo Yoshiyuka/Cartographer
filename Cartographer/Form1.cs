@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.IO;
 
 namespace Cartographer
 {
@@ -67,6 +68,19 @@ namespace Cartographer
             //arr[2] = "10";
             //itm = new ListViewItem(arr);
             //listView1.Items.Add(itm);
+            try
+            {
+                using (StreamReader stream = new StreamReader("test.log"))
+                {
+                    String line = stream.ReadToEnd();
+                    Console.WriteLine(line);
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("Could not read file.");
+                Console.WriteLine(exception.Message);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
