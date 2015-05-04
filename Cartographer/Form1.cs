@@ -85,7 +85,16 @@ namespace Cartographer
 
         private void button1_Click(object sender, EventArgs e)
         {
+            openFileDialog1.Filter = "Text Files (.txt)|*.txt";
+            openFileDialog1.FilterIndex = 1;
+            
             openFileDialog1.ShowDialog();
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            FileInfo fileInfo = new FileInfo(openFileDialog1.FileName);
+            FileStream fileStream = fileInfo.OpenRead();
         }
     }
 }
