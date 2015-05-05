@@ -94,7 +94,13 @@ namespace Cartographer
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             FileInfo fileInfo = new FileInfo(openFileDialog1.FileName);
-            FileStream fileStream = fileInfo.OpenRead();
+            FileStream fileStream = fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            fileStream.Seek(-1024, SeekOrigin.End);
+
+            byte[] bytes = new byte[1024];
+            fileStream.Read(bytes, 0, 1024);
+            string str = Encoding.Default.GetString(bytes);
+            Console.WriteLine(str);
         }
     }
 }
