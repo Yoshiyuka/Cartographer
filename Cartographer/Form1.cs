@@ -38,7 +38,14 @@ namespace Cartographer
         public Form1()
         {  
             InitializeComponent();
-            SQLiteConnection.CreateFile("MyDatabase.sqlite");
+            if (!System.IO.File.Exists("MyDatabase.sqlite"))
+            {
+                SQLiteConnection.CreateFile("MyDatabase.sqlite");
+            }
+            else
+            {
+                Console.WriteLine("Database file already exists.");
+            }
             //int exstyle = GetWindowLong(this.Handle, GWL_EXSTYLE);
             //exstyle |= WS_EX_TRANSPARENT;
             //SetWindowLong(this.Handle, GWL_EXSTYLE, exstyle);
