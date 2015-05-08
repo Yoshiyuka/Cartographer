@@ -34,6 +34,8 @@ namespace Cartographer
         private const int GWL_EXSTYLE = -20;
         private const int WS_EX_TRANSPARENT = 0x20;
 
+        SQLiteConnection dbConnection;
+
 
         public Form1()
         {  
@@ -46,35 +48,13 @@ namespace Cartographer
             {
                 Console.WriteLine("Database file already exists.");
             }
-            //int exstyle = GetWindowLong(this.Handle, GWL_EXSTYLE);
-            //exstyle |= WS_EX_TRANSPARENT;
-            //SetWindowLong(this.Handle, GWL_EXSTYLE, exstyle);
-            //IntPtr hwndf = this.Handle;
-            //IntPtr hwndParent = GetDesktopWindow();
-            //SetParent(hwndf, hwndParent);
-            //this.TopMost = true;
+
+            dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
+            dbConnection.Open();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //listView1.View = View.Details;
-            //listView1.GridLines = true;
-            //listView1.FullRowSelect = false;
-
-            //listView1.Columns.Add("Target", 100);
-            //listView1.Columns.Add("Faction", 100);
-            //listView1.Columns.Add("Affects", 100);
-
-            //Add items in the listview
-            //string[] arr = new string[4];
-            //ListViewItem itm;
-
-            //Add first item
-            //arr[0] = "product_1";
-            //arr[1] = "100";
-            //arr[2] = "10";
-            //itm = new ListViewItem(arr);
-            //listView1.Items.Add(itm);
             try
             {
                 using (StreamReader stream = new StreamReader("test.log"))
