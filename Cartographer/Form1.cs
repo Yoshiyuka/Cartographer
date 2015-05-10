@@ -33,6 +33,16 @@ namespace Cartographer
 
             dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
             dbConnection.Open();
+
+            string query = "CREATE TABLE npc (id INT, name VARCHAR(32))";
+            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+            command.ExecuteNonQuery();
+            query = "CREATE TABLE faction (id INT, name VARCHAR(16))";
+            command = new SQLiteCommand(query, dbConnection);
+            command.ExecuteNonQuery();
+            query = "CREATE TABLE npc_factions (npc_id INT, faction_id INT)";
+            command = new SQLiteCommand(query, dbConnection);
+            command.ExecuteNonQuery();
         }
 
         private void Form1_Load(object sender, EventArgs e)
