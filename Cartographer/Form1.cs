@@ -20,29 +20,36 @@ namespace Cartographer
 
 
         public Form1()
-        {  
+        {
+            bool newDB = false;
             InitializeComponent();
             if (!System.IO.File.Exists("MyDatabase.sqlite"))
             {
                 SQLiteConnection.CreateFile("MyDatabase.sqlite");
+                newDB = true;
             }
             else
             {
                 Console.WriteLine("Database file already exists.");
+                newDB = false;
             }
 
             dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
             dbConnection.Open();
 
-            string query = "CREATE TABLE npc (id INT, name VARCHAR(32))";
-            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
-            command.ExecuteNonQuery();
-            query = "CREATE TABLE faction (id INT, name VARCHAR(16))";
-            command = new SQLiteCommand(query, dbConnection);
-            command.ExecuteNonQuery();
-            query = "CREATE TABLE npc_factions (npc_id INT, faction_id INT)";
-            command = new SQLiteCommand(query, dbConnection);
-            command.ExecuteNonQuery();
+            //construct some fresh tables in our new database if the db doesn't already exist.
+            if (newDB)
+            {
+                string query = "CREATE TABLE npc (id INT, name VARCHAR(32))";
+                SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+                command.ExecuteNonQuery();
+                query = "CREATE TABLE faction (id INT, name VARCHAR(16))";
+                command = new SQLiteCommand(query, dbConnection);
+                command.ExecuteNonQuery();
+                query = "CREATE TABLE npc_factions (npc_id INT, faction_id INT)";
+                command = new SQLiteCommand(query, dbConnection);
+                command.ExecuteNonQuery();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
