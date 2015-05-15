@@ -40,10 +40,10 @@ namespace Cartographer
             //construct some fresh tables in our new database if the db doesn't already exist.
             if (newDB)
             {
-                string query = "CREATE TABLE npc (id INT, name VARCHAR(32))";
+                string query = "CREATE TABLE npc (id INTEGER PRIMARY KEY, name VARCHAR(32))";
                 SQLiteCommand command = new SQLiteCommand(query, dbConnection);
                 command.ExecuteNonQuery();
-                query = "CREATE TABLE faction (id INT, name VARCHAR(16))";
+                query = "CREATE TABLE faction (id INTEGER PRIMARY KEY, name VARCHAR(16))";
                 command = new SQLiteCommand(query, dbConnection);
                 command.ExecuteNonQuery();
                 query = "CREATE TABLE npc_factions (npc_id INT, faction_id INT)";
@@ -87,6 +87,27 @@ namespace Cartographer
             fileStream.Read(bytes, 0, 1024);
             string str = Encoding.Default.GetString(bytes);
             Console.WriteLine(str);
+        }
+
+        private void InsertButton_Click(object sender, EventArgs e)
+        {
+            string query = "INSERT INTO npc (name) VALUES ('" + NPCName.Text + "')";
+            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+            command.ExecuteNonQuery();
+            query = "INSERT INTO faction (name) VALUES('" + FactionName.Text + "')";
+            command = new SQLiteCommand(query, dbConnection);
+            command.ExecuteNonQuery();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM npc ORDER BY name DESC";
+            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Console.WriteLine(reader["name"]);
+            }
         }
     }
 }
