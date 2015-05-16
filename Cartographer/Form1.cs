@@ -30,7 +30,7 @@ namespace Cartographer
             }
             else
             {
-                Console.WriteLine("Database file already exists.");
+                System.Diagnostics.Debug.WriteLine("Database file already exists.");
                 newDB = false;
             }
 
@@ -64,8 +64,8 @@ namespace Cartographer
             }
             catch (Exception exception)
             {
-                Console.WriteLine("Could not read file.");
-                Console.WriteLine(exception.Message);
+                System.Diagnostics.Debug.WriteLine("Could not read file.");
+                System.Diagnostics.Debug.WriteLine(exception.Message);
             }
         }
 
@@ -106,8 +106,10 @@ namespace Cartographer
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                Console.WriteLine(reader["name"]);
+                System.Diagnostics.Debug.WriteLine(reader["name"].ToString());
             }
+
+            reader.Close();
         }
     }
 }
