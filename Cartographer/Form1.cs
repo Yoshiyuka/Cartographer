@@ -40,13 +40,13 @@ namespace Cartographer
             //construct some fresh tables in our new database if the db doesn't already exist.
             if (newDB)
             {
-                string query = "CREATE TABLE npc (id INTEGER PRIMARY KEY, name VARCHAR(32))";
+                string query = "CREATE TABLE npc (id INTEGER PRIMARY KEY, name TEXT UNIQUE)";
                 SQLiteCommand command = new SQLiteCommand(query, dbConnection);
                 command.ExecuteNonQuery();
-                query = "CREATE TABLE faction (id INTEGER PRIMARY KEY, name VARCHAR(16))";
+                query = "CREATE TABLE faction (id INTEGER PRIMARY KEY, name TEXT UNIQUE)";
                 command = new SQLiteCommand(query, dbConnection);
                 command.ExecuteNonQuery();
-                query = "CREATE TABLE npc_factions (npc_id INT, faction_id INT)";
+                query = "CREATE TABLE npc_factions (npc_id INT, faction_id INT, modifier INT)";
                 command = new SQLiteCommand(query, dbConnection);
                 command.ExecuteNonQuery();
             }
@@ -97,22 +97,31 @@ namespace Cartographer
             //If either NPC or faction does not already have an entry when submitting data, insert these values into their respective tables.
             //If the NPC/Faction relationship does not already exist in NPC_Factions, insert this pair. Otherwise, it's duplicate data and should be ignored.
 
-            string query = "INSERT INTO npc (name) VALUES ('" + NPCName.Text + "')";
+            //something like INSERT INTO npc_factions (npc_id, faction_id) VALUES( SELECT id FROM npc WHERE name = NPCName.Text, SELECT id from faction where ......)
+
+            string query = "INSERT OR IGNORE INTO npc (name) VALUES ('" + NPCName.Text + "')";
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             command.ExecuteNonQuery();
-            query = "INSERT INTO faction (name) VALUES('" + FactionName.Text + "')";
+            query = "INSERT OR IGNORE INTO faction (name) VALUES('" + FactionName.Text + "')";
+            command = new SQLiteCommand(query, dbConnection);
+            command.ExecuteNonQuery();
+
+            query = @"INSERT INTO npc_factions (npc_id, faction_id, modifier)
+                    VALUES( (SELECT id FROM npc WHERE name ='" + NPCName.Text + @"'), 
+                            (SELECT id FROM faction WHERE name = '" + FactionName.Text + @"'),
+                            '" + FactionAdjustment.Value + "')";
             command = new SQLiteCommand(query, dbConnection);
             command.ExecuteNonQuery();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string query = "SELECT * FROM npc ORDER BY name DESC";
+            string query = "SELECT * FROM npc_factions ORDER BY npc_id DESC";
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                System.Diagnostics.Debug.WriteLine(reader["name"].ToString());
+                System.Diagnostics.Debug.WriteLine(reader["npc_id"].ToString() + "\t" + reader["faction_id"].ToString());
             }
 
             reader.Close();
