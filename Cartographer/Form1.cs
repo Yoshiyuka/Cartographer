@@ -67,6 +67,9 @@ namespace Cartographer
                 System.Diagnostics.Debug.WriteLine("Could not read file.");
                 System.Diagnostics.Debug.WriteLine(exception.Message);
             }
+
+            FactionAdjustment.Maximum = 1;
+            FactionAdjustment.Minimum = -1;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -116,12 +119,12 @@ namespace Cartographer
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string query = "SELECT * FROM npc_factions ORDER BY npc_id DESC";
+            string query = "SELECT * FROM npc ORDER BY name ASC";
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                System.Diagnostics.Debug.WriteLine(reader["npc_id"].ToString() + "\t" + reader["faction_id"].ToString());
+                System.Diagnostics.Debug.WriteLine(reader["name"].ToString());// + "\t" + reader["faction_id"].ToString());
             }
 
             reader.Close();
