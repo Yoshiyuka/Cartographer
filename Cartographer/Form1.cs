@@ -91,6 +91,12 @@ namespace Cartographer
 
         private void InsertButton_Click(object sender, EventArgs e)
         {
+            //We have three tables: NPC, Faction, and NPC_Factions (relationship between them). 
+            //NPC and Faction are a SET. That is, their entries are UNIQUE.
+            //An NPC belonging to many factions is represented in NPC_Factions.
+            //If either NPC or faction does not already have an entry when submitting data, insert these values into their respective tables.
+            //If the NPC/Faction relationship does not already exist in NPC_Factions, insert this pair. Otherwise, it's duplicate data and should be ignored.
+
             string query = "INSERT INTO npc (name) VALUES ('" + NPCName.Text + "')";
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             command.ExecuteNonQuery();
