@@ -90,7 +90,7 @@ namespace Cartographer
             fileStream.Read(bytes, 0, 256);
             string str = Encoding.Default.GetString(bytes);
             string pattern = "Targeted (NPC): ";
-            int pattern_end = str.IndexOf(pattern) + pattern.Length;
+            int pattern_end = str.LastIndexOf(pattern) + pattern.Length;
             string npc_name = str.Substring(pattern_end).Replace("\r", string.Empty).Replace("\n", string.Empty);
             System.Diagnostics.Debug.WriteLine(npc_name);
         }
