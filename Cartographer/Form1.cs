@@ -80,7 +80,20 @@ namespace Cartographer
             openFileDialog1.ShowDialog();
         }
 
-        private static void OnFileChanged(object source, FileSystemEventArgs e)
+        delegate void SetNPCNameCallback(string name);
+        private void SetNPCName(string name)
+        {
+            if(npc_label.InvokeRequired)
+            {
+                SetNPCNameCallback npcNameCallback = new SetNPCNameCallback(SetNPCName);
+                Invoke(npcNameCallback, new object[] { name });
+            }
+            else
+            {
+                npc_label.Text = name;
+            }
+        }
+        private void OnFileChanged(object source, FileSystemEventArgs e)
         {
             FileInfo fileInfo = new FileInfo(e.FullPath);
             FileStream fileStream = fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -101,7 +114,8 @@ namespace Cartographer
             string str = Encoding.Default.GetString(bytes);
             string pattern = "Targeted (NPC): ";
             int pattern_end = str.LastIndexOf(pattern) + pattern.Length;
-            string npc_name = str.Substring(pattern_end).Replace("\r", string.Empty).Replace("\n", string.Empty);
+            string npc_name = str.Substring(pattern_end);
+            SetNPCName(npc_name);
             System.Diagnostics.Debug.WriteLine(npc_name);
         }
 
