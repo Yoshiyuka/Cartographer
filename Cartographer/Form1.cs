@@ -80,11 +80,21 @@ namespace Cartographer
             openFileDialog1.ShowDialog();
         }
 
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private static void OnFileChanged(object source, FileSystemEventArgs e)
         {
-            FileInfo fileInfo = new FileInfo(openFileDialog1.FileName);
+            FileInfo fileInfo = new FileInfo(e.FullPath);
             FileStream fileStream = fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            fileStream.Seek(-256, SeekOrigin.End);
+            try
+            {
+                fileStream.Seek(-256, SeekOrigin.End);
+            } 
+            catch (Exception exception)
+            {
+                //Exception WILL be thrown if deletions are made to the log file. However, while EverQuest runs, there should always
+                //only be additions to the file. There's no reason for deletions to be made in the log unless done by the user.
+                System.Diagnostics.Debug.WriteLine(exception.Message);
+
+            }
 
             byte[] bytes = new byte[256];
             fileStream.Read(bytes, 0, 256);
@@ -93,6 +103,15 @@ namespace Cartographer
             int pattern_end = str.LastIndexOf(pattern) + pattern.Length;
             string npc_name = str.Substring(pattern_end).Replace("\r", string.Empty).Replace("\n", string.Empty);
             System.Diagnostics.Debug.WriteLine(npc_name);
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            FileSystemWatcher fileWatcher = new FileSystemWatcher(new FileInfo(openFileDialog1.FileName).Directory.FullName);
+            fileWatcher.Filter = "*.txt";
+            fileWatcher.NotifyFilter = NotifyFilters.LastWrite;
+            fileWatcher.Changed += new FileSystemEventHandler(OnFileChanged);
+            fileWatcher.EnableRaisingEvents = true;    
         }
 
         private void InsertButton_Click(object sender, EventArgs e)
