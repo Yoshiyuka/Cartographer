@@ -114,9 +114,13 @@ namespace Cartographer
             string str = Encoding.Default.GetString(bytes);
             string pattern = "Targeted (NPC): ";
             int pattern_end = str.LastIndexOf(pattern) + pattern.Length;
-            string npc_name = str.Substring(pattern_end);
-            SetNPCName(npc_name);
-            System.Diagnostics.Debug.WriteLine(npc_name);
+            //LastIndexOf returns -1 if the pattern can't be found so if the pattern isn't found, pattern_end would be (pattern.Length - 1)
+            if (pattern_end >= pattern.Length)
+            {
+                string npc_name = str.Substring(pattern_end);
+                SetNPCName(npc_name);
+                System.Diagnostics.Debug.WriteLine(npc_name);
+            }
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
