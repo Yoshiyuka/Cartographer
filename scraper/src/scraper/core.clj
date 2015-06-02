@@ -13,5 +13,5 @@
   "Entry point to scraper methods. Pulls in data from project1999's wiki to insert into an SQLite DB."
   [& args]
   ;The main wiki page detailing the first 200 factions. This is where we will get a list of faction links to scrape
-  (tagsoup/parse "http://wiki.project1999.com/index.php?title=Category:Factions")
+  (dorun (map #(tag %) (next tagsoup/parse "http://wiki.project1999.com/index.php?title=Category:Factions")))
       )
