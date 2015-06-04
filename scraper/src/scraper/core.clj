@@ -20,8 +20,15 @@
                   [])
                 (mapcat #(by-fn %1 pred?) (children html-tree)))))
 
-(defn by-attribute [html-tree x]
-      (by-fn html-tree #(map-contains-map? (attributes %) x)))
+;(defn by-attribute [html-tree x]
+;      (by-fn html-tree #(map-contains-map? (attributes %) x)))
+(defmulti by-attribute (fn [_ x] (class x)))
+(defmethod by-attribute clojure.lang.IPersistentMap
+           [html-tree x]
+           (by-fn html-tree #(map-contains-map? (attributes %) x)))
+(defmethod by-attribute clojure.lang.Keyword
+           [html-tree x]
+           (by-fn html-tree #(contains? (attributes %) x)))
 
 (defn by-tag [html-tree x]
       (by-fn html-tree #(= (tag %) x)))
