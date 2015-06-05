@@ -33,10 +33,25 @@
 (defn by-tag [html-tree x]
       (by-fn html-tree #(= (tag %) x)))
 
+(defn get-content [html-tree x]
+      (let [[tag-element attributes-element content-element] x]
+           content-element))
+
+(defn get-attribute [html-tree x]
+      (let [[tag-element attributes-element content-element] html-tree]
+           (attributes-element x)))
+(def factions {})
 ;we'll have to create a method to walk through the vector tree to extract tags/attributes
 (defn -main
-  "Entry point to scraper methods. Pulls in data from project1999's wiki to insert into an SQLite DB."
-  [& args]
-  ;The main wiki page detailing the first 200 factions. This is where we will get a list of faction links to scrape
-  (dorun (map #(tag %) (next parse "http://wiki.project1999.com/index.php?title=Category:Factions")))
+      "Entry point to scraper methods. Pulls in data from project1999's wiki to insert into an SQLite DB."
+      [& args]
+      ;The main wiki page detailing the first 200 factions. This is where we will get a list of faction links to scrape
+      ;(dorun (map #(tag %) (next parse "http://wiki.project1999.com/index.php?title=Category:Factions")))
+      (map
+        #(assoc-in factions [(get-attribute % :title)] {:href (get-attribute % :href)})
+        (-> (parse "http://wiki.project1999.com/index.php?title=Category:Factions")
+            (by-attribute {:class "mw-content-ltr"})
+            (first)
+            (by-tag :a))
+        )
       )
