@@ -52,6 +52,8 @@
         (-> (parse "http://wiki.project1999.com/index.php?title=Category:Factions")
             (by-attribute {:class "mw-content-ltr"})
             (first)
+            (by-tag :table)
+            (first)
             (by-tag :a))
         )
       )
