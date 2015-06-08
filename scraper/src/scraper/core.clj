@@ -42,6 +42,9 @@
            (attributes-element x)))
 (def factions {})
 ;we'll have to create a method to walk through the vector tree to extract tags/attributes
+
+(def future-test
+  (future (parse "http://wiki.project1999.com/index.php?title=Category:Factions")))
 (defn -main
       "Entry point to scraper methods. Pulls in data from project1999's wiki to insert into an SQLite DB."
       [& args]
@@ -49,7 +52,7 @@
       ;(dorun (map #(tag %) (next parse "http://wiki.project1999.com/index.php?title=Category:Factions")))
       (map
         #(assoc-in factions [(get-attribute % :title)] {:href (get-attribute % :href)})
-        (-> (parse "http://wiki.project1999.com/index.php?title=Category:Factions")
+        (-> @future-test
             (by-attribute {:class "mw-content-ltr"})
             (first)
             (by-tag :table)
