@@ -61,7 +61,8 @@
                            (first)
                            (by-tag :a))
                        )]
-    (map #(get-in % [:href]) the-factions)
+    (doseq [faction the-factions]
+      (println (:href (first (vals faction)))))
     ;(dotimes [i 10] (future (send-off url-col (parse "http://wiki.project1999.com/index.php?title=Category:Factions"))))
     )
   )
