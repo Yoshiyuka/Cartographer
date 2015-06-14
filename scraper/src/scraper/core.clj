@@ -47,6 +47,19 @@
 ;  (future (parse "http://wiki.project1999.com/index.php?title=Category:Factions")))
 (def url-col (agent []))
 
+(defn build-faction-url [href]
+  (str "http://wiki.project1999.com" href))
+
+(defn build-all-faction-urls [factions]
+  (map build-faction-url factions))
+
+(defn get-faction-info [url]
+  (parse url))
+
+(defn get-all-faction-info [urls]
+  (map get-faction-info urls))
+
+
 (defn -main
   "Entry point to scraper methods. Pulls in data from project1999's wiki to insert into an SQLite DB."
   [& args]
@@ -60,9 +73,12 @@
                            (by-tag :table)
                            (first)
                            (by-tag :a))
-                       )]
-    (doseq [faction the-factions]
-      (println (:href (first (vals faction)))))
+                       )
+        urls (map #(:href (first (vals %))) the-factions)]
+    (build-all-faction-urls urls)
+    ;(map println urls)
+    ;(doseq [faction the-factions]
+    ;  (println (:href (first (vals faction)))))
     ;(dotimes [i 10] (future (send-off url-col (parse "http://wiki.project1999.com/index.php?title=Category:Factions"))))
     )
   )
