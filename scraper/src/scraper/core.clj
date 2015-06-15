@@ -75,7 +75,9 @@
                            (by-tag :a))
                        )
         urls (map #(:href (first (vals %))) the-factions)]
-    (build-all-faction-urls urls)
+    (apply parse (build-all-faction-urls urls))
+
+
     ;(map println urls)
     ;(doseq [faction the-factions]
     ;  (println (:href (first (vals faction)))))
