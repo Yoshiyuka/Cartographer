@@ -59,6 +59,8 @@
 (defn get-all-faction-info [urls]
   (map get-faction-info urls))
 
+(defn build-zone-modifiers [url]
+  (by-tag (second (by-tag (first (by-attribute (parse url) {:class "factionTable"})) :tr)) :ul))
 
 (defn -main
   "Entry point to scraper methods. Pulls in data from project1999's wiki to insert into an SQLite DB."
@@ -74,8 +76,13 @@
                            (first)
                            (by-tag :a))
                        )
-        urls (map #(:href (first (vals %))) the-factions)]
-    (apply parse (build-all-faction-urls urls))
+        urls (map #(:href (first (vals %))) the-factions)
+        urls (build-all-faction-urls urls)]
+
+    (build-zone-modifiers (first urls))
+    ;(by-tag (second (by-tag (first (by-attribute (parse (first urls)) {:class "factionTable"})) :tr)) :ul)
+    ;(doall (map #(into {} {:zones-raise get-faction-info urls))
+      ;(doall (map get-faction-info url)))
 
 
     ;(map println urls)
