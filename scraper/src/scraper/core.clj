@@ -34,7 +34,7 @@
       (by-fn html-tree #(= (tag %) x)))
 
 (defn get-content [html-tree x]
-      (let [[tag-element attributes-element content-element] x]
+      (let [[tag-element attributes-element content-element] html-tree]
            content-element))
 
 (defn get-attribute [html-tree x]
@@ -62,6 +62,8 @@
 (defn build-zone-modifiers [url]
   (by-tag (second (by-tag (first (by-attribute (parse url) {:class "factionTable"})) :tr)) :ul))
 
+(def test-map {})
+
 (defn -main
   "Entry point to scraper methods. Pulls in data from project1999's wiki to insert into an SQLite DB."
   [& args]
@@ -79,7 +81,10 @@
         urls (map #(:href (first (vals %))) the-factions)
         urls (build-all-faction-urls urls)]
 
-    (build-zone-modifiers (first urls))
+    (by-tag (first (build-zone-modifiers (first urls))) :li)
+    ;(assoc test-map :zones-raise (get-content (by-tag (first (build-zone-modifiers (first urls))) :li) nil)
+    ;                :zones-lower (get-content (by-tag (second (build-zone-modifiers (first urls))) :li) nil))
+
     ;(by-tag (second (by-tag (first (by-attribute (parse (first urls)) {:class "factionTable"})) :tr)) :ul)
     ;(doall (map #(into {} {:zones-raise get-faction-info urls))
       ;(doall (map get-faction-info url)))
