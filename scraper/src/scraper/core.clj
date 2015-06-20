@@ -34,8 +34,8 @@
       (by-fn html-tree #(= (tag %) x)))
 
 (defn get-content [html-tree x]
-      (let [[tag-element attributes-element content-element] html-tree]
-           content-element))
+      (let [[tag-element attributes-element content-element & rest-of-content] html-tree]
+        (cons content-element rest-of-content))
 
 (defn get-attribute [html-tree x]
       (let [[tag-element attributes-element content-element] html-tree]
@@ -61,8 +61,6 @@
 
 (defn build-zone-modifiers [url]
   (by-tag (second (by-tag (first (by-attribute (parse url) {:class "factionTable"})) :tr)) :ul))
-
-(def test-map {})
 
 (defn -main
   "Entry point to scraper methods. Pulls in data from project1999's wiki to insert into an SQLite DB."
