@@ -35,7 +35,7 @@
 
 (defn get-content [html-tree x]
       (let [[tag-element attributes-element content-element & rest-of-content] html-tree]
-        (cons content-element rest-of-content))
+        (cons content-element rest-of-content)))
 
 (defn get-attribute [html-tree x]
       (let [[tag-element attributes-element content-element] html-tree]
